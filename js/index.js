@@ -33,6 +33,7 @@ window.onload = function () {
     if (req.readyState === XMLHttpRequest.DONE) {
       var data = JSON.parse(req.response)
       window.reddit_feed = data;
+      startProcess();
     }
   }
   var time = document.querySelectorAll('.time')
@@ -41,3 +42,63 @@ window.onload = function () {
     time[i].innerHTML = moment.unix(unixTime);
   }
 }
+
+
+//ALL CUSTOM CODE GOES IN HERE:
+function startProcess(){
+
+  for(var i = 0; i<window.reddit_feed.data.length; i++){
+  var currentArticle = window.reddit_feed.data[i];
+  var author= currentArticle.author;
+ 
+  
+  //Create HTML Elements in Memory
+  var container = document.createElement('div');
+  container.className="col-sm-12 col-md-4";
+
+  var post = document.createElement('div');
+  post.className="post";
+  container.appendChild(post);
+
+  var link = document.createElement('a');
+  link.href="javascript.void(0)";
+  post.appendChild(link);
+
+  var thumbnail = document.createElement('div');
+  thumbnail.className="thumbnail";
+  link.appendChild(thumbnail);
+
+  var image = document.createElement('img');
+  image.src=currentArticle.thumbnail;
+  thumbnail.appendChild(image);
+  
+  var author = document.createElement('div');
+  author.className="author";
+  author.innerHTML = currentArticle.author;
+  link.appendChild(author);
+
+
+  var title = document.createElement('div');
+  title.className="title";
+  title.innerHTML = currentArticle.title;
+  link.appendChild(title);
+
+  var body = document.createElement('div');
+  body.className="body";
+  body.innerHTML = currentArticle.body;
+  link.appendChild(body);
+
+  var time = document.createElement('div');
+  time.className="time";
+  time.innerHTML = currentArticle.created;
+  link.appendChild(time);
+
+
+  //Assign values to Element(s)
+
+
+  //Nest Elements Within Each Other
+
+  document.getElementById('main').appendChild(container);
+}}
+
